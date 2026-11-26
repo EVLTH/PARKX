@@ -1,0 +1,112 @@
+PARKX – Mettre le site en ligne par FTP
+by Matthias AS Evan G
+=====================================================================
+
+LA TECHNOLOGIE
+  PARKX est écrit en React + TypeScript et compilé avec Vite en simples fichiers
+  HTML, JavaScript et CSS (dossier « app »). C'est un site « statique » : il
+  fonctionne sur n'importe quel hébergement, sans PHP ni MySQL.
+
+PRÉREQUIS DE L'HÉBERGEMENT
+  Indispensable
+    - un hébergement web avec un accès FTP (identifiant, mot de passe, adresse FTP) ;
+    - environ 2 Mo d'espace.
+  Conseillé
+    - une adresse en https:// (gratuite chez la plupart des hébergeurs) : elle permet
+      d'ouvrir PARKX même sans réseau et protège mieux les données du navigateur.
+  Pour partager les mêmes données entre plusieurs ordinateurs (au choix)
+    - Firebase (gratuit, en temps réel, sans PHP) : voir FIREBASE.txt ;
+    - ou un hébergement avec PHP 7.4 ou plus (fichier api.php, sans MySQL) : voir la
+      partie « PARTAGE AVEC PHP » plus bas.
+  Logiciel : FileZilla (gratuit, https://filezilla-project.org), ou celui de l'hébergeur.
+
+=====================================================================
+INSTALLATION PAS À PAS
+=====================================================================
+  1. Décompressez PARKX.zip sur votre ordinateur : vous obtenez un dossier « PARKX ».
+  2. Ouvrez FileZilla. En haut, renseignez Hôte (ex. ftp.votre-site.fr), Identifiant,
+     Mot de passe et Port (21), puis « Connexion rapide ».
+     Ces informations sont dans l'espace client de votre hébergeur.
+  3. Dans la partie droite (le serveur), ouvrez le dossier public du site. Selon
+     l'hébergeur, il s'appelle www, public_html, htdocs ou web.
+  4. Glissez le dossier « PARKX » de la partie gauche vers ce dossier public.
+     Résultat : public_html/PARKX/index.html (avec les dossiers et fichiers à côté).
+  5. Ouvrez dans le navigateur : https://votre-site.fr/PARKX/
+     (pour une adresse plus courte, renommez le dossier, par exemple « parkx »).
+  6. PARKX demande votre prénom. En haut de l'écran :
+       « Enregistré · local »  : le site fonctionne, les données restent dans
+                                 chaque navigateur (aucun partage configuré) ;
+       « Synchronisé »         : les données sont partagées (Firebase ou PHP).
+
+  Fichiers du dossier
+    index.html          la page d'accueil du site
+    app/                le programme PARKX (ne pas modifier)
+    sw.js               copie hors connexion du site (ne pas modifier)
+    reglages.js         vos réglages, dont la connexion Firebase
+    perso.css, logo.webp  apparence et logo
+    firestore.rules     règles de sécurité à copier dans Firebase (voir FIREBASE.txt)
+    api.php             partage avec PHP (facultatif, inutile sans PHP)
+    *.txt               guides
+
+=====================================================================
+OÙ SONT LES DONNÉES ? (LIMITES DE LA SAUVEGARDE LOCALE)
+=====================================================================
+  Sans partage configuré, chaque navigateur enregistre ses propres données
+  (IndexedDB), sur l'appareil utilisé. Elles restent après la fermeture du navigateur
+  ou l'arrêt de l'ordinateur, mais :
+    - elles ne sont PAS partagées entre ordinateurs, ni entre navigateurs (Chrome et
+      Edge sur le même ordinateur ont chacun les leurs) ;
+    - elles sont liées à l'adresse exacte du site : http:// et https://, ou un autre nom
+      de domaine, sont considérés comme des sites différents ;
+    - elles disparaissent si l'on efface les données de navigation, et ne sont pas
+      gardées en navigation privée.
+  Pour partager les mêmes données entre plusieurs ordinateurs, il faut un stockage
+  commun en ligne : c'est le rôle de Firebase (FIREBASE.txt) ou de api.php (PHP).
+  Dans tous les cas, exportez régulièrement une sauvegarde : menu Sauvegarde >
+  « Exporter une sauvegarde » (la page affiche la date de la dernière).
+
+=====================================================================
+METTRE À JOUR PARKX SANS PERDRE LES DONNÉES
+=====================================================================
+  1. Par précaution, sur un ordinateur : Sauvegarde > « Exporter une sauvegarde ».
+  2. Décompressez la nouvelle version de PARKX.
+  3. Si vous aviez modifié reglages.js (Firebase, couleurs…), perso.css ou logo.webp :
+     NE les remplacez PAS (ne les envoyez pas), ou recopiez vos valeurs dans les
+     nouveaux fichiers avant l'envoi.
+  4. Dans FileZilla, envoyez les autres fichiers dans le MÊME dossier qu'avant, en
+     acceptant de remplacer les anciens. Gardez la même adresse de site.
+  5. Rouvrez le site et appuyez sur Ctrl + F5 (rechargement complet).
+  Les données ne sont pas dans les fichiers du site : elles restent dans les navigateurs
+  (mode local), dans Firebase, ou dans le dossier « donnees » (mode PHP). Ne supprimez
+  jamais ce dossier « donnees » sur le serveur.
+
+=====================================================================
+PARTAGE AVEC PHP (SANS FIREBASE)
+=====================================================================
+  Si l'hébergement a PHP 7.4 ou plus, api.php partage automatiquement les données de
+  toute l'équipe (sans MySQL) : l'indicateur affiche « Synchronisé ». Les données sont
+  enregistrées sur le serveur dans le dossier « donnees » (créé tout seul, protégé,
+  avec une copie automatique par jour gardée 30 jours). Les modifications des autres
+  arrivent toutes les 10 secondes environ (pas en temps réel instantané).
+  - Vérification : https://votre-site.fr/PARKX/api.php?a=ping doit afficher
+    {"app":"PARKX",…,"stockage":true}. Si « stockage » vaut false : FileZilla, clic
+    droit sur le dossier PARKX > Droits d'accès > 755 (ou 775).
+  - Code d'accès (conseillé) : dans api.php, remplacez  $CODE_ACCES = '';  par
+    exemple par  $CODE_ACCES = 'parking2026';  puis renvoyez api.php.
+  - Pas de PHP, ou vous préférez Firebase : supprimez api.php du serveur (ou mettez
+    actif: false dans la partie « serveur » de reglages.js). Si Firebase est configuré,
+    api.php est de toute façon ignoré.
+
+=====================================================================
+EN CAS DE PROBLÈME
+=====================================================================
+  - Page blanche : le dossier « app » n'a pas été envoyé en entier ; renvoyez-le.
+  - Ancienne version affichée après une mise à jour : Ctrl + F5.
+  - Couleurs ou réglages ignorés : erreur de frappe dans reglages.js (guillemet ou
+    virgule manquant) ; reprenez le fichier d'origine.
+  - Données « disparues » : vérifiez que vous utilisez le même navigateur et la même
+    adresse (avec ou sans https, avec ou sans www) qu'avant.
+  - Mode PHP, message « Fichier de données illisible sur le serveur » : le fichier
+    donnees/parkx-donnees.php est abîmé (rien n'a été écrasé). Par FTP, remplacez-le
+    par la copie la plus récente du dossier donnees/sauvegardes (parkx-AAAA-MM-JJ.php,
+    à renommer parkx-donnees.php).

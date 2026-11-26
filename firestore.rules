@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// =====================================================================
+// Règles de sécurité Firestore pour PARKX — by Matthias AS Evan G
+// Seuls les ordinateurs qui connaissent le CODE DU PROJET peuvent lire et
+// modifier les données. Sans ce code, Firebase refuse tout, même à
+// quelqu'un qui connaît l'adresse du site.
+//
+// 1. Copiez tout ce texte dans la console Firebase :
+//    Firestore Database > onglet « Règles ».
+// 2. Dans la console (PAS dans ce fichier : ce dossier est mis en ligne),
+//    remplacez VOTRE/CODE par votre code, en gardant les guillemets.
+//    Code : au moins 10 caractères, lettres sans accents, chiffres,
+//    tirets (-) ou soulignés (_). Les majuscules comptent.
+//    Exemple de forme (inventez le vôtre) : Parkx-Maquette-7Hq2Lm9x
+// 3. Cliquez sur « Publier ».
+// Tant que VOTRE/CODE n'est pas remplacé, personne ne peut rien lire ni écrire.
+// =====================================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /parkx/{code}/{document=**} {
+      allow read, write: if code == "VOTRE/CODE";
+    }
+  }
+}
