@@ -73,15 +73,14 @@ window.PARKX_REGLAGES = {
   // Synchronisation entre plusieurs ordinateurs avec Firebase (gratuit, en temps réel) : voir FIREBASE.txt.
   // Tant que apiKey et projectId sont vides, PARKX fonctionne uniquement en local (dans le navigateur).
   firebase: {
-    // Valeurs de « firebaseConfig » données par la console Firebase (Paramètres du projet > Vos applications)
-    apiKey: 'AIzaSyCDJyu6FKSDmbIB4JJfChUFMNnZsXJ6HHs',
-    authDomain: 'parkx-9a330.firebaseapp.com',
-    projectId: 'parkx-9a330',
-    appId: '1:252124873156:web:28d2a9ac08b5dc0f712491',
-    // Adresse du compte d'équipe créé dans Firebase > Authentication (la même que dans firestore.rules)
-    emailEquipe: '',
-    // Nom du projet partagé (une autre valeur = un projet séparé dans la même base Firebase)
-    projet: 'maquette',
+  apiKey: 'AIzaSyCDJyu6FKSDmbIB4JJfChUFMNnZsXJ6HHs',
+  authDomain: 'parkx-9a330.firebaseapp.com',
+  projectId: 'parkx-9a330',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '1:252124873156:web:28d2a9ac08b5dc0f712491',
+  code: 'Parkx-Evan-Matthias-2026',
+},
   },
 
   // Autre possibilité de partage, sans Firebase : hébergement avec PHP (programme api.php livré dans ce dossier).
