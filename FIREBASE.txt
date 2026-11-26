@@ -93,7 +93,14 @@ INSTALLATION (environ 10 minutes, une seule fois)
       appId: '1:123456789012:web:abcdef123456',
     },
 
-  Seuls apiKey, projectId et appId sont indispensables. N'écrivez PAS le code ici.
+  Seuls apiKey, projectId et appId sont indispensables.
+
+  SANS RIEN À TAPER (au choix) : ajoutez aussi le code dans reglages.js,
+      code: 'votre-code-ici-42',
+  PARKX l'utilise alors directement sur tous les ordinateurs. Attention : reglages.js
+  est public (site, dépôt GitHub) ; toute personne qui le lit peut alors lire,
+  modifier ou supprimer les données. Faites des exports réguliers (menu Sauvegarde).
+  Sinon, laissez code: '' et chaque ordinateur saisit le code une fois dans PARKX.
 
 6. METTRE EN LIGNE
   Envoyez le dossier PARKX par FTP (voir INSTALLATION-FTP.txt), puis ouvrez l'adresse

@@ -74,15 +74,19 @@ window.PARKX_REGLAGES = {
   // Tant que apiKey et projectId sont vides, PARKX fonctionne uniquement en local (dans le navigateur).
   // Recopiez ici les valeurs de « firebaseConfig » données par la console Firebase
   // (Paramètres du projet > Vos applications), en gardant les guillemets et les virgules.
-  // Le CODE DU PROJET ne s'écrit pas ici : chaque ordinateur le saisit une fois dans PARKX.
+  // code : le même que dans les règles Firestore (à la place de VOTRE/CODE).
+  //   - rempli ici : aucun ordinateur n'a de code à taper, MAIS toute personne qui ouvre
+  //     le site (ou ce fichier sur GitHub) peut le lire, donc lire, modifier ou supprimer les données ;
+  //   - laissé vide '' : chaque ordinateur le saisit une fois dans PARKX (plus sûr).
   firebase: {
-  apiKey: 'AIzaSyCDJyu6FKSDmbIB4JJfChUFMNnZsXJ6HHs',
-  authDomain: 'parkx-9a330.firebaseapp.com',
-  projectId: 'parkx-9a330',
-  storageBucket: '',
-  messagingSenderId: '',
-  appId: '1:252124873156:web:28d2a9ac08b5dc0f712491',
-},
+    apiKey: '',
+    authDomain: '',
+    projectId: '',
+    storageBucket: '',
+    messagingSenderId: '',
+    appId: '',
+    code: '',
+  },
 
   // Autre possibilité de partage, sans Firebase : hébergement avec PHP (programme api.php livré dans ce dossier).
   // Ignoré si Firebase est configuré ci-dessus.
