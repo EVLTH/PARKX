@@ -76,13 +76,13 @@ window.PARKX_REGLAGES = {
   // (Paramètres du projet > Vos applications), en gardant les guillemets et les virgules.
   // Le CODE DU PROJET ne s'écrit pas ici : chaque ordinateur le saisit une fois dans PARKX.
   firebase: {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-  },
+  apiKey: 'AIzaSyCDJyu6FKSDmbIB4JJfChUFMNnZsXJ6HHs',
+  authDomain: 'parkx-9a330.firebaseapp.com',
+  projectId: 'parkx-9a330',
+  storageBucket: '',
+  messagingSenderId: '',
+  appId: '1:252124873156:web:28d2a9ac08b5dc0f712491',
+},
 
   // Autre possibilité de partage, sans Firebase : hébergement avec PHP (programme api.php livré dans ce dossier).
   // Ignoré si Firebase est configuré ci-dessus.
