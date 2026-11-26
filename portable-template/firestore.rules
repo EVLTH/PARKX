@@ -1,0 +1,18 @@
+rules_version = '2';
+
+// =====================================================================
+// Règles de sécurité Firestore pour PARKX — by Matthias AS Evan G
+// Seul le compte d'équipe (créé dans Firebase > Authentication) peut lire
+// et modifier les données. Personne d'autre, même avec l'adresse du site.
+//
+// AVANT DE PUBLIER : remplacez equipe@exemple.fr par l'adresse de votre
+// compte d'équipe, en minuscules (la même que « emailEquipe » dans reglages.js).
+// =====================================================================
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /parkx/{projet}/{document=**} {
+      allow read, write: if request.auth != null
+        && request.auth.token.email == "equipe@exemple.fr";
+    }
+  }
+}

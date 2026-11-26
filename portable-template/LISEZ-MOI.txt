@@ -1,0 +1,55 @@
+PARKX – Suivi de projet – Maquette de parking
+by Matthias AS Evan G
+=====================================================================
+
+COMMENT UTILISER CE DOSSIER
+  1. Sur un ordinateur, sans rien installer
+     Décompressez d'abord le dossier (ne l'ouvrez pas directement depuis le .zip),
+     puis double-cliquez sur « index.html » (Chrome ou Edge conseillés).
+  2. En ligne, pour toute l'équipe (FTP)
+     Voir INSTALLATION-FTP.txt : où déposer les fichiers, prérequis, mise à jour.
+  3. Les mêmes données sur plusieurs ordinateurs, en temps réel
+     Voir FIREBASE.txt (gratuit, sans PHP ni MySQL).
+
+VOS DONNÉES SONT ENREGISTRÉES AUTOMATIQUEMENT
+  Chaque ajout ou modification est enregistré tout de suite dans le navigateur.
+  En haut de l'écran :
+    « Enregistré · local »  PARKX fonctionne uniquement en local, sur cet ordinateur ;
+    « Synchronisé »         les données sont aussi partagées avec l'équipe.
+  Si un enregistrement échoue, un message rouge l'indique : rien n'est caché.
+  Vous retrouvez tout en rouvrant PARKX, même après avoir éteint l'ordinateur, à
+  condition de l'ouvrir de la même façon et dans le même navigateur.
+  Sans synchronisation, les données disparaissent si l'on efface les données de
+  navigation, en navigation privée, et ne sont pas visibles dans un autre navigateur
+  ou sur un autre ordinateur.
+  Gardez donc aussi une copie : menu « Sauvegarde » > « Exporter une sauvegarde »
+  (la page indique la date de votre dernière sauvegarde).
+
+ENVOYER PARKX À QUELQU'UN
+  Compressez ce dossier et envoyez le fichier .zip. Les données ne voyagent pas avec le
+  dossier : utilisez le menu « Sauvegarde » > « Exporter une sauvegarde », puis chez
+  l'autre personne « Restaurer une sauvegarde » (ou utilisez Firebase).
+
+MODIFIER PARKX SANS PROGRAMMER
+  reglages.js  : couleurs, noms du menu, voiture de la simulation 3D, dimensions de
+                 référence, synchronisation Firebase. S'ouvre avec le Bloc-notes.
+  logo.webp    : le logo. Remplacez ce fichier par votre logo (même nom), ou indiquez
+                 un autre nom de fichier dans reglages.js.
+  perso.css    : retouches d'apparence (pour ceux qui connaissent un peu le CSS).
+  Après une modification : enregistrez le fichier, puis rechargez la page (F5).
+
+NE PAS MODIFIER
+  Le dossier « app » et le fichier « sw.js » contiennent le programme. Pour des
+  changements plus profonds, utilisez le code source (PARKX-code-source.zip).
+
+CONTENU
+  index.html          la page à ouvrir
+  reglages.js         vos réglages (dont Firebase)
+  perso.css           vos retouches d'apparence
+  logo.webp           le logo
+  firestore.rules     règles de sécurité à copier dans Firebase
+  api.php             partage sur un hébergement PHP (facultatif)
+  sw.js               permet d'ouvrir le site en ligne même sans réseau
+  app/                le programme PARKX
+  INSTALLATION-FTP.txt  mettre PARKX en ligne
+  FIREBASE.txt        synchroniser plusieurs ordinateurs

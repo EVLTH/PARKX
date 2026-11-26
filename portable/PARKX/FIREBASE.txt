@@ -1,0 +1,181 @@
+PARKX – Synchroniser plusieurs ordinateurs avec Firebase
+by Matthias AS Evan G
+=====================================================================
+
+À QUOI ÇA SERT
+  Avec Firebase, toute l'équipe retrouve les mêmes données sur tous les ordinateurs :
+  - chaque création ou modification est enregistrée automatiquement ;
+  - les changements apparaissent en quelques secondes sur les autres ordinateurs
+    ouverts sur PARKX (temps réel) ;
+  - les données restent dans Firebase après la fermeture du navigateur ;
+  - sans Internet, PARKX continue de fonctionner : les modifications sont gardées sur
+    l'ordinateur et envoyées au retour de la connexion ;
+  - si deux personnes modifient la même information, la modification la plus récente
+    l'emporte, et tous les ordinateurs reprennent cette version (pas de doublon).
+  Le site reste un site « statique » : aucun PHP ni MySQL n'est nécessaire.
+
+CE QUE ÇA COÛTE
+  Rien, avec l'offre gratuite de Firebase (« Spark ») : PARKX n'utilise que
+  Authentication et Cloud Firestore. Limites gratuites de Firestore :
+  1 Go de données, 50 000 lectures et 20 000 écritures par jour. Chaque ouverture de
+  PARKX relit les fiches du projet (quelques centaines au plus) : cela laisse des
+  dizaines d'ouvertures par jour pour l'équipe. Le 1 Go comprend les photos et documents :
+  environ 700 Mo de fichiers, soit plus d'un millier de photos (PARKX les réduit
+  automatiquement à environ 0,5 Mo).
+  Les photos et documents sont enregistrés dans Firestore (découpés en morceaux) :
+  Firebase Storage n'est pas utilisé, car il exige maintenant l'offre payante
+  « Blaze » avec une carte bancaire.
+
+SÉCURITÉ ET ACCÈS (méthode la plus simple)
+  Un seul compte pour toute l'équipe : une adresse e-mail (inventée si vous voulez)
+  et un mot de passe. Chaque personne tape ce mot de passe une seule fois sur son
+  ordinateur. Les règles de sécurité n'autorisent QUE ce compte : personne d'autre ne
+  peut lire, modifier ou supprimer les données, même en connaissant l'adresse du site.
+  La clé « apiKey » visible dans reglages.js n'est pas un secret : c'est normal avec
+  Firebase, la protection vient des règles et du mot de passe.
+
+=====================================================================
+INSTALLATION (environ 15 minutes, une seule fois)
+=====================================================================
+
+1. CRÉER LE PROJET FIREBASE
+  - Allez sur https://console.firebase.google.com avec un compte Google.
+  - « Créer un projet » (ou « Ajouter un projet ») > nom : par exemple parkx-maquette.
+  - Google Analytics : inutile, vous pouvez le désactiver. > « Créer le projet ».
+
+2. ACTIVER LA CONNEXION PAR MOT DE PASSE
+  - Menu de gauche : Authentication (Sécurité > Authentication) > « Commencer ».
+  - Onglet « Méthode de connexion » (Sign-in method) > « Adresse e-mail/Mot de passe »
+    > activer le premier interrupteur > « Enregistrer ».
+
+3. CRÉER LE COMPTE D'ÉQUIPE
+  - Authentication > onglet « Utilisateurs » (Users) > « Ajouter un utilisateur ».
+  - Adresse : par exemple equipe@parkx-maquette.fr (elle n'a pas besoin d'exister ;
+    écrivez-la en minuscules).
+  - Mot de passe : au moins 8 caractères, difficile à deviner. Communiquez-le à l'équipe.
+  - Conseillé : Authentication > onglet « Paramètres » (Settings) > « Actions des
+    utilisateurs » (User actions) > décochez « Activer la création (inscription) » et
+    « Activer la suppression » > « Enregistrer ». Personne ne pourra alors créer de
+    compte ni supprimer le compte d'équipe depuis un navigateur (la connexion continue
+    de fonctionner). Si cette option n'apparaît pas, passez : les règles de l'étape 5
+    protègent déjà les données.
+
+4. CRÉER LA BASE FIRESTORE
+  - Menu de gauche : Firestore Database (Bases de données et stockage > Firestore)
+    > « Créer une base de données ».
+  - Édition « Standard ». Gardez l'identifiant proposé « (default) » (ne le changez pas).
+  - Emplacement : en Europe, par exemple « europe-west9 (Paris) » ou « eur3 ».
+  - Mode : « Production » (ou « Test », peu importe : l'étape 5 remplace les règles).
+  - « Créer ».
+
+5. PUBLIER LES RÈGLES DE SÉCURITÉ
+  - Ouvrez le fichier firestore.rules (fourni dans ce dossier) avec le Bloc-notes.
+  - Remplacez equipe@exemple.fr par l'adresse du compte d'équipe (étape 3).
+  - Dans Firestore Database > onglet « Règles » : effacez tout, collez le contenu du
+    fichier, puis « Publier ».
+
+6. RÉCUPÉRER LA CONFIGURATION DU SITE
+  - Roue dentée en haut à gauche > « Paramètres du projet » > onglet « Général ».
+  - En bas, « Vos applications » > icône </> (Web) > surnom : PARKX
+    (ne cochez pas Firebase Hosting) > « Enregistrer l'application ».
+  - Firebase affiche un bloc « firebaseConfig ». Notez les valeurs de :
+    apiKey, authDomain, projectId et appId.
+
+7. RENSEIGNER reglages.js
+  Ouvrez reglages.js avec le Bloc-notes et complétez la partie « firebase » en gardant
+  les guillemets et les virgules, par exemple :
+
+    firebase: {
+      apiKey: 'AIzaSyA-exemple-1234567890',
+      authDomain: 'parkx-maquette.firebaseapp.com',
+      projectId: 'parkx-maquette',
+      appId: '1:123456789012:web:abcdef123456',
+      emailEquipe: 'equipe@parkx-maquette.fr',
+      projet: 'maquette',
+    },
+
+  L'adresse emailEquipe doit être EXACTEMENT celle de l'étape 3 et des règles.
+
+8. METTRE EN LIGNE
+  Envoyez le dossier PARKX par FTP (voir INSTALLATION-FTP.txt), puis ouvrez l'adresse
+  du site (https://…). Firebase est aussi utilisé quand on ouvre index.html par
+  double-clic ; si la connexion échoue dans ce cas, passez par l'adresse du site.
+
+9. PREMIÈRE CONNEXION SUR CHAQUE ORDINATEUR
+  - PARKX demande votre prénom, puis le mot de passe de l'équipe (une seule fois).
+  - En haut de l'écran : « Synchronisation en cours », puis « Synchronisé ».
+  - Les données déjà présentes dans ce navigateur sont envoyées dans Firebase : rien
+    n'est perdu, et les exemples « DÉMO » ne sont jamais envoyés.
+  - Pour reprendre les données d'une autre version de PARKX (fichier ouvert en
+    double-clic sur un autre ordinateur, ancien site…) : dans l'ancienne version,
+    Sauvegarde > « Exporter une sauvegarde », puis dans le site synchronisé,
+    Sauvegarde > « Restaurer une sauvegarde » > « Fusionner ».
+
+=====================================================================
+L'INDICATEUR EN HAUT DE L'ÉCRAN
+=====================================================================
+  Synchronisé                Tout est enregistré et partagé avec l'équipe.
+  Synchronisation en cours   Des modifications partent ou arrivent.
+  Hors ligne                 Pas d'Internet : les modifications sont gardées sur
+                             l'ordinateur et partiront au retour de la connexion.
+  Erreur de synchronisation  Un problème empêche le partage (le message explique quoi
+                             faire). Les données restent enregistrées sur l'ordinateur.
+  Connexion requise          Saisir le mot de passe de l'équipe.
+  Enregistré · local         Firebase n'est pas configuré : PARKX fonctionne
+                             uniquement en local, dans ce navigateur.
+
+=====================================================================
+TESTER LA SYNCHRONISATION ENTRE DEUX ORDINATEURS
+=====================================================================
+  1. Ouvrez PARKX sur l'ordinateur A et sur l'ordinateur B (même adresse), connectez-
+     vous sur les deux : l'indicateur affiche « Synchronisé ».
+  2. Sur A : Fabrication > « Ajouter une tâche » nommée « Test synchro ».
+     Sur B, sans recharger la page : la tâche apparaît en quelques secondes.
+  3. Sur B : ouvrez la tâche > « Modifier » > statut « En cours ».
+     Sur A : le statut change tout seul.
+  4. Sur A : Photos > ajoutez une photo. Sur B : la photo apparaît (quelques secondes
+     de plus selon sa taille).
+  5. Hors connexion : coupez le Wi-Fi de B (indicateur « Hors ligne »), ajoutez une
+     entrée dans le Journal, puis rallumez le Wi-Fi : B affiche « Synchronisé » et
+     l'entrée apparaît sur A.
+  6. Conflit : coupez le Wi-Fi de B, modifiez le nom de la tâche « Test synchro » sur B,
+     puis modifiez-la aussi sur A (plus tard). Rallumez le Wi-Fi de B : les deux
+     ordinateurs gardent la version de A, la plus récente.
+  7. Fermez complètement le navigateur de B, rouvrez PARKX : tout est là, sans
+     redemander le mot de passe.
+  8. Supprimez la tâche « Test synchro » sur A : elle disparaît aussi sur B.
+
+=====================================================================
+SAUVEGARDE ET RESTAURATION
+=====================================================================
+  - Les données sont dans Firebase ET dans le navigateur de chaque ordinateur.
+  - Gardez quand même des copies : menu Sauvegarde > « Exporter une sauvegarde »
+    (fichier .json complet, photos et documents compris). La page affiche la date de
+    la dernière sauvegarde. L'export automatique peut en faire régulièrement.
+  - Restaurer : menu Sauvegarde > « Restaurer une sauvegarde » > choisir le fichier.
+    « Fusionner » ajoute ce qui manque ; « Remplacer tout » remet le projet dans l'état
+    du fichier. Avec Firebase, la restauration s'applique à TOUTE l'équipe.
+  - Points de restauration : menu Sauvegarde > « Points de restauration ».
+  - « Réinitialiser » n'efface que l'ordinateur utilisé : les données de l'équipe
+    restent dans Firebase et sont rechargées.
+  - Pour supprimer des éléments, utilisez PARKX (pas la console Firebase) : la
+    suppression est alors transmise à tous les ordinateurs.
+
+=====================================================================
+EN CAS DE PROBLÈME
+=====================================================================
+  - « Enregistré · local » alors que Firebase est configuré : reglages.js contient une
+    erreur de frappe (guillemet ou virgule manquant), ou apiKey / projectId sont vides.
+  - « Mot de passe incorrect » : vérifiez le mot de passe (Authentication > Utilisateurs
+    > ⋮ > Réinitialiser le mot de passe pour en choisir un nouveau).
+  - « Compte d'équipe introuvable » : l'adresse emailEquipe de reglages.js ne correspond
+    à aucun utilisateur de l'étape 3.
+  - « Connexion par adresse e-mail et mot de passe non activée » : refaites l'étape 2.
+  - « Accès refusé par Firebase » : l'adresse n'est pas la même dans reglages.js et dans
+    les règles (étape 5), ou les règles n'ont pas été publiées.
+  - « Base Firestore introuvable » : refaites l'étape 4 en gardant l'identifiant
+    « (default) ».
+  - « Quota gratuit atteint » : la synchronisation reprend le lendemain (vers 9 h, heure
+    de Paris) ; les modifications sont gardées sur l'ordinateur en attendant.
+  - Sur un ordinateur partagé : menu Sauvegarde > « Synchronisation entre ordinateurs »
+    > « Se déconnecter de cet ordinateur ».

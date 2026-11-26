@@ -1,0 +1,12 @@
+/* =====================================================================
+   PARKX – RETOUCHES D'APPARENCE (facultatif)
+   Les couleurs principales se règlent dans « reglages.js ».
+   Ici, vous pouvez ajouter vos propres règles CSS. Exemples ci-dessous :
+   pour en activer un, retirez les marques de commentaire au début
+   et à la fin de la ligne.
+   ===================================================================== */
+
+/* :root { --radius: 4px; }                 coins moins arrondis */
+/* body { font-size: 15px; }                texte un peu plus grand */
+/* .sidebar { background: #F7F9FC; }        fond du menu */
+/* .sb-brand .logo-img { width: 150px; }    logo plus grand dans le menu */

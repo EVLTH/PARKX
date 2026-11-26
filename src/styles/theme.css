@@ -1,0 +1,74 @@
+/* PARKX — palette tirée des couleurs exactes du logo officiel ParkX.
+   Logo : bleu nuit #002A52 (lettrage), bleu #086DAF / #1189CF (panneaux solaires),
+   vert #378827 et #0F7435 → #8EC513 (colline et X), jaune #FFDB2A → orange #F38513 (soleil).
+   Toutes les couleurs de l'interface sont centralisées ici (et dans brand.ts pour les dessins SVG). */
+:root {
+  /* Couleurs du logo */
+  --logo-navy: #002a52;
+  --logo-deep: #00437d;
+  --logo-blue: #086daf;
+  --logo-sky: #1189cf;
+  --logo-green: #378827;
+  --logo-green-light: #5aa818;
+  --logo-lime: #8ec513;
+  --logo-forest: #0f7435;
+  --logo-sun: #ffdb2a;
+  --logo-gold: #fec410;
+  --logo-orange: #f38513;
+
+  --status-red: #dc2626;
+
+  /* Déclinaisons calculées automatiquement à partir des couleurs ci-dessus */
+  --navy-950: color-mix(in srgb, var(--logo-navy) 62%, #000);
+  --navy: var(--logo-navy);
+  --navy-800: var(--logo-deep);
+  --navy-700: color-mix(in srgb, var(--logo-navy) 82%, #fff);
+  --blue: var(--logo-blue);
+  --blue-600: color-mix(in srgb, var(--logo-blue) 82%, #000);
+  --blue-400: var(--logo-sky);
+  --blue-200: color-mix(in srgb, var(--logo-blue) 28%, #fff);
+  --blue-100: color-mix(in srgb, var(--logo-blue) 14%, #fff);
+  --blue-50: color-mix(in srgb, var(--logo-blue) 7%, #fff);
+
+  /* Statuts (cahier des charges) */
+  --green: var(--logo-green);
+  --green-ink: var(--logo-forest);
+  --green-200: color-mix(in srgb, var(--logo-green) 24%, #fff);
+  --green-bg: color-mix(in srgb, var(--logo-green) 9%, #fff);
+  --orange: var(--logo-orange);
+  --orange-ink: color-mix(in srgb, var(--logo-orange) 62%, #000);
+  --orange-200: color-mix(in srgb, var(--logo-orange) 32%, #fff);
+  --orange-bg: color-mix(in srgb, var(--logo-orange) 9%, #fff);
+  --sun: var(--logo-sun);
+  --gold: var(--logo-gold);
+  --red: var(--status-red);
+  --red-200: color-mix(in srgb, var(--status-red) 22%, #fff);
+  --red-bg: color-mix(in srgb, var(--status-red) 6%, #fff);
+  --gray: #64748b;
+  --gray-bg: #f1f5f9;
+
+  /* Neutres */
+  --bg: #f4f7fa;
+  --surface: #ffffff;
+  --ink: #0f172a;
+  --ink-2: #334155;
+  --muted: #64748b;
+  --line: #e2e8f0;
+  --line-2: #eef2f7;
+
+  /* Signature graphique : les 4 teintes du logo */
+  --brand-stripe: linear-gradient(90deg, var(--logo-navy) 0 25%, var(--logo-blue) 25% 50%, var(--logo-green) 50% 75%, var(--logo-gold) 75% 100%);
+  --brand-progress: linear-gradient(90deg, var(--logo-forest), var(--logo-green-light) 70%, var(--logo-lime));
+
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 4px 14px color-mix(in srgb, var(--navy) 6%, transparent);
+  --shadow-lg: 0 24px 60px color-mix(in srgb, var(--navy) 22%, transparent);
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --sb-w: 252px;
+  --sb-w-c: 72px;
+  --tb-h: 60px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
